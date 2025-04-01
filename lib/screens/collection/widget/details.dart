@@ -171,24 +171,6 @@ class _DetailsState extends State<Details> with SingleTickerProviderStateMixin {
                           ),
                         ),
 
-                        CustomButton(
-                          vertical: 0,
-                          width: 300,
-                          color: AppColors.primary,
-                          fontSize: 12,
-                          text: '+ Add to my collection',
-                          onPressed: () {
-                            Fluttertoast.showToast(
-                                msg: "+ Adding to my Collection",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.BOTTOM,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.green,
-                                textColor: Colors.white,
-                                fontSize: 16.0);
-                          },
-                        ),
-
                         const SizedBox(height: 16),
                         //
                         Container(
@@ -275,99 +257,117 @@ class _DetailsState extends State<Details> with SingleTickerProviderStateMixin {
                                             borderRadius:
                                                 BorderRadius.circular(15),
                                             color: Colors.black),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                        child: Row(
                                           children: [
-                                            const Text(
-                                              'Title',
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.white70,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            const SizedBox(height: 4),
-                                            const Text('Description',
-                                                style: TextStyle(
-                                                    fontSize: 10,
-                                                    color: Colors.white54)),
-                                            const Text('Description',
-                                                style: TextStyle(
-                                                    fontSize: 10,
-                                                    color: Colors.white54)),
-                                            Row(
+                                            _buildLines(),
+                                            const SizedBox(width: 15),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
-                                                IconButton(
-                                                    onPressed: () {},
-                                                    icon: const Icon(
-                                                        Icons.attach_file)),
                                                 const Text(
-                                                  'Attachments',
+                                                  'Title',
                                                   style: TextStyle(
-                                                    fontSize: 10,
-                                                    color: Colors.white60,
+                                                    fontSize: 14,
+                                                    color: Colors.white70,
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
-                                              ],
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                _buildAttachmentBox(),
-                                                const SizedBox(width: 10),
-                                                _buildAttachmentBox(),
-                                                const SizedBox(width: 10),
-                                                _buildAttachmentBox(),
-                                              ],
-                                            ),
-                                            const SizedBox(height: 20),
-                                            const Text(
-                                              'Title',
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.white70,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            const SizedBox(height: 4),
-                                            const Text(
-                                              'Description',
-                                              style: TextStyle(
-                                                  fontSize: 10,
-                                                  color: Colors.white54),
-                                            ),
-                                            const Text('Description',
-                                                style: TextStyle(
-                                                    fontSize: 10,
-                                                    color: Colors.white54)),
-                                            Row(
-                                              children: [
-                                                IconButton(
-                                                    onPressed: () {},
-                                                    icon: const Icon(
-                                                        Icons.attach_file)),
+                                                const SizedBox(height: 4),
+                                                const Text('Description',
+                                                    style: TextStyle(
+                                                        fontSize: 10,
+                                                        color: Colors.white54)),
+                                                const Text('Description',
+                                                    style: TextStyle(
+                                                        fontSize: 10,
+                                                        color: Colors.white54)),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    IconButton(
+                                                        onPressed: () {},
+                                                        icon: const Icon(
+                                                          Icons.attach_file,
+                                                          size: 14,
+                                                          color: Colors.white,
+                                                        )),
+                                                    const Text(
+                                                      'Attachments',
+                                                      style: TextStyle(
+                                                        fontSize: 10,
+                                                        color: Colors.white60,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    _buildAttachmentBox(),
+                                                    const SizedBox(width: 10),
+                                                    _buildAttachmentBox(),
+                                                    const SizedBox(width: 10),
+                                                    _buildAttachmentBox(),
+                                                  ],
+                                                ),
+                                                const SizedBox(height: 30),
                                                 const Text(
-                                                  'Attachments',
+                                                  'Title',
                                                   style: TextStyle(
-                                                    fontSize: 10,
-                                                    color: Colors.white60,
+                                                    fontSize: 14,
+                                                    color: Colors.white70,
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
-                                              ],
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                _buildAttachmentBox(),
-                                                const SizedBox(width: 10),
-                                                _buildAttachmentBox(),
-                                                const SizedBox(width: 10),
-                                                _buildAttachmentBox(),
+                                                const SizedBox(height: 4),
+                                                const Text(
+                                                  'Description',
+                                                  style: TextStyle(
+                                                      fontSize: 10,
+                                                      color: Colors.white54),
+                                                ),
+                                                const Text('Description',
+                                                    style: TextStyle(
+                                                        fontSize: 10,
+                                                        color: Colors.white54)),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    IconButton(
+                                                        onPressed: () {},
+                                                        icon: const Icon(
+                                                          Icons.attach_file,
+                                                          size: 14,
+                                                          color: Colors.white,
+                                                        )),
+                                                    const Text(
+                                                      'Attachments',
+                                                      style: TextStyle(
+                                                        fontSize: 10,
+                                                        color: Colors.white60,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    _buildAttachmentBox(),
+                                                    const SizedBox(width: 10),
+                                                    _buildAttachmentBox(),
+                                                    const SizedBox(width: 10),
+                                                    _buildAttachmentBox(),
+                                                  ],
+                                                ),
                                               ],
                                             ),
                                           ],
@@ -380,9 +380,81 @@ class _DetailsState extends State<Details> with SingleTickerProviderStateMixin {
                   ),
                 ),
               ]),
+              const SizedBox(height: 70),
             ],
           ),
         ),
+        Positioned(
+          bottom: 10,
+          left: 0,
+          right: 0,
+          child: Center(
+            child: CustomButton(
+              vertical: 0,
+              width: 200,
+              color: AppColors.primary,
+              fontSize: 12,
+              text: '+ Add to my collection',
+              onPressed: () {
+                Fluttertoast.showToast(
+                    msg: "+ Adding to my Collection",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.green,
+                    textColor: Colors.white,
+                    fontSize: 16.0);
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLines() {
+    return Column(
+      children: [
+        const CircleAvatar(
+          backgroundColor: Colors.white,
+          radius: 10,
+        ),
+        Container(height: 50, width: 1, color: AppColors.primary),
+        const CircleAvatar(
+          backgroundColor: AppColors.primary,
+          radius: 3,
+        ),
+        Container(height: 5, width: 1, color: AppColors.primary),
+        const CircleAvatar(
+          backgroundColor: AppColors.primary,
+          radius: 5,
+        ),
+        Container(height: 5, width: 1, color: AppColors.primary),
+        const CircleAvatar(
+          backgroundColor: AppColors.primary,
+          radius: 3,
+        ),
+        Container(height: 80, width: 1, color: AppColors.primary),
+        const CircleAvatar(
+          backgroundColor: Colors.white,
+          radius: 10,
+        ),
+        Container(height: 50, width: 1, color: AppColors.primary),
+        const CircleAvatar(
+          backgroundColor: AppColors.primary,
+          radius: 3,
+        ),
+        Container(height: 5, width: 1, color: AppColors.primary),
+        const CircleAvatar(
+          backgroundColor: AppColors.primary,
+          radius: 5,
+        ),
+        Container(height: 5, width: 1, color: AppColors.primary),
+        const CircleAvatar(
+          backgroundColor: AppColors.primary,
+          radius: 3,
+        ),
+        Container(height: 50, width: 1, color: AppColors.primary),
       ],
     );
   }
@@ -415,7 +487,7 @@ class _DetailsState extends State<Details> with SingleTickerProviderStateMixin {
 
 Widget _buildDescriptionTab(YoutubePlayerController youtubeController) {
   return SingleChildScrollView(
-    padding: const EdgeInsets.all(16),
+    padding: const EdgeInsets.all(10),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -427,106 +499,220 @@ Widget _buildDescriptionTab(YoutubePlayerController youtubeController) {
             progressIndicatorColor: Colors.blue,
           ),
         ),
-        const Text(
-          'Tasting notes',
-          style: TextStyle(
-            fontSize: 18,
-            color: Colors.white70,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 8),
-        const Text(
-          'by Charles MacLean MBE',
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.white54,
+        const SizedBox(height: 16),
+        const Padding(
+          padding: EdgeInsets.all(10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Tasting notes',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white70,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 8),
+              Text(
+                'by Charles MacLean MBE',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.white54,
+                ),
+              ),
+              SizedBox(height: 16),
+
+              // Nose
+              Text(
+                'Nose',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white70,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 8),
+              Text(
+                'Rich and fruity with a hint of smoke.',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.white54,
+                ),
+              ),
+              Text(
+                'Notes of dried fruit and spice.',
+                style: TextStyle(fontSize: 14, color: Colors.white54),
+              ),
+              Text(
+                'Subtle maritime influence.',
+                style: TextStyle(fontSize: 14, color: Colors.white54),
+              ),
+              SizedBox(height: 16),
+
+              // Palate
+              Text(
+                'Palate',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white70,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 8),
+              Text(
+                'Full-bodied with peppery spice.',
+                style: TextStyle(fontSize: 14, color: Colors.white54),
+              ),
+              Text(
+                'Sweet malt and dried fruit flavors.',
+                style: TextStyle(fontSize: 14, color: Colors.white54),
+              ),
+              Text(
+                'Distinctive smoky character.',
+                style: TextStyle(fontSize: 14, color: Colors.white54),
+              ),
+              SizedBox(height: 16),
+              Text(
+                'Finish',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white60,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 8),
+              Text(
+                'Long and warming.',
+                style: TextStyle(fontSize: 14, color: Colors.white54),
+              ),
+              Text(
+                'Peppery with lingering smoke.',
+                style: TextStyle(fontSize: 14, color: Colors.white54),
+              ),
+              Text(
+                'Slightly sweet at the very end.',
+                style: TextStyle(fontSize: 14, color: Colors.white54),
+              ),
+            ],
           ),
         ),
         const SizedBox(height: 16),
-
-        // Nose
-        const Text(
-          'Nose',
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.white70,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 8),
-        const Text(
-          'Rich and fruity with a hint of smoke.',
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.white54,
-          ),
-        ),
-        const Text(
-          'Notes of dried fruit and spice.',
-          style: TextStyle(fontSize: 14, color: Colors.white54),
-        ),
-        const Text(
-          'Subtle maritime influence.',
-          style: TextStyle(fontSize: 14, color: Colors.white54),
+        const Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Your notes',
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white70),
+            ),
+            Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+              size: 17,
+            )
+          ],
         ),
         const SizedBox(height: 16),
+        const Padding(
+          padding: EdgeInsets.all(10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Tasting notes',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white70,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 8),
+              Text(
+                'by Charles MacLean MBE',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.white54,
+                ),
+              ),
+              SizedBox(height: 16),
 
-        // Palate
-        const Text(
-          'Palate',
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.white70,
-            fontWeight: FontWeight.bold,
+              // Nose
+              Text(
+                'Nose',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white70,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 8),
+              Text(
+                'Rich and fruity with a hint of smoke.',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.white54,
+                ),
+              ),
+              Text(
+                'Notes of dried fruit and spice.',
+                style: TextStyle(fontSize: 14, color: Colors.white54),
+              ),
+              Text(
+                'Subtle maritime influence.',
+                style: TextStyle(fontSize: 14, color: Colors.white54),
+              ),
+              SizedBox(height: 16),
+
+              // Palate
+              Text(
+                'Palate',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white70,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 8),
+              Text(
+                'Full-bodied with peppery spice.',
+                style: TextStyle(fontSize: 14, color: Colors.white54),
+              ),
+              Text(
+                'Sweet malt and dried fruit flavors.',
+                style: TextStyle(fontSize: 14, color: Colors.white54),
+              ),
+              Text(
+                'Distinctive smoky character.',
+                style: TextStyle(fontSize: 14, color: Colors.white54),
+              ),
+              SizedBox(height: 16),
+              Text(
+                'Finish',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white60,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 8),
+              Text(
+                'Long and warming.',
+                style: TextStyle(fontSize: 14, color: Colors.white54),
+              ),
+              Text(
+                'Peppery with lingering smoke.',
+                style: TextStyle(fontSize: 14, color: Colors.white54),
+              ),
+              Text(
+                'Slightly sweet at the very end.',
+                style: TextStyle(fontSize: 14, color: Colors.white54),
+              ),
+            ],
           ),
         ),
-        const SizedBox(height: 8),
-        const Text(
-          'Full-bodied with peppery spice.',
-          style: TextStyle(fontSize: 14, color: Colors.white54),
-        ),
-        const Text(
-          'Sweet malt and dried fruit flavors.',
-          style: TextStyle(fontSize: 14, color: Colors.white54),
-        ),
-        const Text(
-          'Distinctive smoky character.',
-          style: TextStyle(fontSize: 14, color: Colors.white54),
-        ),
-        const SizedBox(height: 16),
-
-        // Finish
-        const Text(
-          'Finish',
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.white60,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 8),
-        const Text(
-          'Long and warming.',
-          style: TextStyle(fontSize: 14, color: Colors.white54),
-        ),
-        const Text(
-          'Peppery with lingering smoke.',
-          style: TextStyle(fontSize: 14, color: Colors.white54),
-        ),
-        const Text(
-          'Slightly sweet at the very end.',
-          style: TextStyle(fontSize: 14, color: Colors.white54),
-        ),
-        const SizedBox(height: 16),
-
-        // Your Notes
-        const Text(
-          'Your notes',
-          style: TextStyle(
-              fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white54),
-        ),
-        const SizedBox(height: 8),
       ],
     ),
   );
