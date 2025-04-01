@@ -19,6 +19,11 @@ class ItemLoaded extends ItemState {
   List<Object?> get props => [items];
 }
 
+class ConnectionStateChanged extends ItemState {
+  final bool isOnline;
+  ConnectionStateChanged(this.isOnline);
+}
+
 class ItemError extends ItemState {
   final String message;
 

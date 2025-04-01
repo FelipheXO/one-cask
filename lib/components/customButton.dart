@@ -1,5 +1,6 @@
 import 'package:app/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
@@ -10,6 +11,7 @@ class CustomButton extends StatelessWidget {
   final double? fontSize;
   final Color? color;
   final Color? fontColor;
+  final bool? isLoading;
   const CustomButton(
       {super.key,
       required this.text,
@@ -18,6 +20,7 @@ class CustomButton extends StatelessWidget {
       this.color,
       this.fontColor,
       this.vertical,
+      this.isLoading,
       this.fontSize});
 
   @override
@@ -34,13 +37,18 @@ class CustomButton extends StatelessWidget {
           ),
         ),
         onPressed: onPressed,
-        child: Text(
-          text,
-          style: TextStyle(
-              fontSize: fontSize ?? 16,
-              fontWeight: FontWeight.bold,
-              color: fontColor),
-        ),
+        child: isLoading == true
+            ? const SpinKitThreeBounce(
+                size: 15,
+                color: Colors.white,
+              )
+            : Text(
+                text,
+                style: TextStyle(
+                    fontSize: fontSize ?? 16,
+                    fontWeight: FontWeight.bold,
+                    color: fontColor),
+              ),
       ),
     );
   }

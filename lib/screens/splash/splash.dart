@@ -1,6 +1,8 @@
 import 'package:app/utils/assets.dart';
+import 'package:app/utils/storage.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,10 +15,20 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(const Duration(seconds: 2), () {
+    init();
+  }
+
+  void init() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final shared = await SharedPreferences.getInstance();
+      Future.delayed(const Duration(seconds: 2), () async {
         if (mounted) {
-          GoRouter.of(context).go('/welcome');
+          final login = shared.getString(AppStorage.login) ?? "";
+          if (login.isEmpty) {
+            GoRouter.of(context).go('/welcome');
+          } else {
+            GoRouter.of(context).go('/bottomNavigation');
+          }
         }
       });
     });

@@ -3,6 +3,8 @@ import 'package:app/models/item.dart';
 import 'package:app/utils/assets.dart';
 import 'package:app/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class Details extends StatefulWidget {
   final ItemModel wines;
@@ -13,7 +15,17 @@ class Details extends StatefulWidget {
   State<Details> createState() => _DetailsState();
 }
 
-class _DetailsState extends State<Details> {
+class _DetailsState extends State<Details> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+  late YoutubePlayerController _youtubeController;
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    _youtubeController.dispose();
+    super.dispose();
+  }
+
   int index = 0;
 
   String wineName = '';
@@ -23,6 +35,14 @@ class _DetailsState extends State<Details> {
   @override
   void initState() {
     super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+    _youtubeController = YoutubePlayerController(
+      initialVideoId: 'KPjrzhS17Vk',
+      flags: const YoutubePlayerFlags(
+        autoPlay: false,
+        mute: false,
+      ),
+    );
     processWineName(widget.wines.name ?? "");
   }
 
@@ -105,22 +125,6 @@ class _DetailsState extends State<Details> {
                     ),
                     child: Column(
                       children: [
-                        /*
-                        
-                        final List<Wines> bottles = [
-    Wines(name: "Springbank 1992 #1234", image: "assets/img/bottle.png"),
-    Wines(name: "Springbank 1995 #5678", image: "assets/img/bottle.png"),
-    Wines(name: "Springbank 1998 #9101", image: "assets/img/bottle.png"),
-    Wines(name: "Springbank 2000 #1121", image: "assets/img/bottle.png"),
-    Wines(name: "Springbank 2003 #3141", image: "assets/img/bottle.png"),
-    Wines(name: "Springbank 2006 #5161", image: "assets/img/bottle.png"),
-    Wines(name: "Springbank 2009 #7181", image: "assets/img/bottle.png"),
-    Wines(name: "Springbank 2012 #9202", image: "assets/img/bottle.png"),
-    Wines(name: "Springbank 2015 #1223", image: "assets/img/bottle.png"),
-    Wines(name: "Springbank 2018 #3242", image: "assets/img/bottle.png"),
-  ];
-
-*/
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 0),
                           child: Column(
@@ -174,7 +178,14 @@ class _DetailsState extends State<Details> {
                           fontSize: 12,
                           text: '+ Add to my collection',
                           onPressed: () {
-                            //
+                            Fluttertoast.showToast(
+                                msg: "+ Adding to my Collection",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.green,
+                                textColor: Colors.white,
+                                fontSize: 16.0);
                           },
                         ),
 
@@ -210,7 +221,7 @@ class _DetailsState extends State<Details> {
                                     : Colors.transparent,
                                 fontColor: index != 1 ? Colors.white54 : null,
                                 fontSize: 12,
-                                text: 'Comments',
+                                text: 'Description',
                                 onPressed: () {
                                   setState(() {
                                     index = 1;
@@ -252,43 +263,118 @@ class _DetailsState extends State<Details> {
                                 ],
                               )
                             : index == 1
-                                ? Column(
+                                ? _buildDescriptionTab(_youtubeController)
+                                : Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       const SizedBox(height: 10),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: List.generate(5, (index) {
-                                          return Icon(
-                                            index < 4
-                                                ? Icons.star
-                                                : Icons.star_border,
-                                            color: Colors.amber,
-                                            size: 26,
-                                          );
-                                        }),
-                                      ),
-                                      const SizedBox(height: 15),
-                                      _buildComment("John Doe",
-                                          "Amazing wine! Smooth and rich flavor."),
-                                      _buildComment("Jane Smith",
-                                          "Loved it! Perfect with steak."),
-                                      _buildComment("Robert Johnson",
-                                          "Nice balance, but a bit too dry for my taste."),
-                                    ],
-                                  )
-                                : const Column(
-                                    children: [
-                                      SizedBox(height: 10),
-                                      Text(
-                                        "This bold California Cabernet Sauvignon boasts rich aromas of blackberries, cassis, and dark chocolate, with subtle hints of vanilla and toasted oak. On the palate, it delivers a full-bodied experience with velvety tannins and a lingering finish of ripe plum and espresso. Aged in French oak barrels, this wine pairs beautifully with grilled steak, aged cheeses, or hearty pasta dishes.",
-                                        style: TextStyle(
-                                          color: Colors.white60,
-                                          fontSize: 14,
+                                      Container(
+                                        padding: const EdgeInsets.all(15),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            color: Colors.black),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const Text(
+                                              'Title',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white70,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            const SizedBox(height: 4),
+                                            const Text('Description',
+                                                style: TextStyle(
+                                                    fontSize: 10,
+                                                    color: Colors.white54)),
+                                            const Text('Description',
+                                                style: TextStyle(
+                                                    fontSize: 10,
+                                                    color: Colors.white54)),
+                                            Row(
+                                              children: [
+                                                IconButton(
+                                                    onPressed: () {},
+                                                    icon: const Icon(
+                                                        Icons.attach_file)),
+                                                const Text(
+                                                  'Attachments',
+                                                  style: TextStyle(
+                                                    fontSize: 10,
+                                                    color: Colors.white60,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                _buildAttachmentBox(),
+                                                const SizedBox(width: 10),
+                                                _buildAttachmentBox(),
+                                                const SizedBox(width: 10),
+                                                _buildAttachmentBox(),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 20),
+                                            const Text(
+                                              'Title',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white70,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            const SizedBox(height: 4),
+                                            const Text(
+                                              'Description',
+                                              style: TextStyle(
+                                                  fontSize: 10,
+                                                  color: Colors.white54),
+                                            ),
+                                            const Text('Description',
+                                                style: TextStyle(
+                                                    fontSize: 10,
+                                                    color: Colors.white54)),
+                                            Row(
+                                              children: [
+                                                IconButton(
+                                                    onPressed: () {},
+                                                    icon: const Icon(
+                                                        Icons.attach_file)),
+                                                const Text(
+                                                  'Attachments',
+                                                  style: TextStyle(
+                                                    fontSize: 10,
+                                                    color: Colors.white60,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                _buildAttachmentBox(),
+                                                const SizedBox(width: 10),
+                                                _buildAttachmentBox(),
+                                                const SizedBox(width: 10),
+                                                _buildAttachmentBox(),
+                                              ],
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ],
-                                  )
+                                  ),
                       ],
                     ),
                   ),
@@ -327,26 +413,138 @@ class _DetailsState extends State<Details> {
   }
 }
 
-Widget _buildComment(String name, String comment) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 5),
+Widget _buildDescriptionTab(YoutubePlayerController youtubeController) {
+  return SingleChildScrollView(
+    padding: const EdgeInsets.all(16),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          name,
-          style: const TextStyle(
-            color: Colors.white,
+        Container(
+          margin: const EdgeInsets.only(bottom: 16),
+          child: YoutubePlayer(
+            controller: youtubeController,
+            showVideoProgressIndicator: true,
+            progressIndicatorColor: Colors.blue,
+          ),
+        ),
+        const Text(
+          'Tasting notes',
+          style: TextStyle(
+            fontSize: 18,
+            color: Colors.white70,
             fontWeight: FontWeight.bold,
           ),
         ),
-        Text(
-          comment,
-          style: const TextStyle(
-            color: Colors.white70,
+        const SizedBox(height: 8),
+        const Text(
+          'by Charles MacLean MBE',
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.white54,
           ),
         ),
-        const Divider(color: Colors.white24),
+        const SizedBox(height: 16),
+
+        // Nose
+        const Text(
+          'Nose',
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.white70,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 8),
+        const Text(
+          'Rich and fruity with a hint of smoke.',
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.white54,
+          ),
+        ),
+        const Text(
+          'Notes of dried fruit and spice.',
+          style: TextStyle(fontSize: 14, color: Colors.white54),
+        ),
+        const Text(
+          'Subtle maritime influence.',
+          style: TextStyle(fontSize: 14, color: Colors.white54),
+        ),
+        const SizedBox(height: 16),
+
+        // Palate
+        const Text(
+          'Palate',
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.white70,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 8),
+        const Text(
+          'Full-bodied with peppery spice.',
+          style: TextStyle(fontSize: 14, color: Colors.white54),
+        ),
+        const Text(
+          'Sweet malt and dried fruit flavors.',
+          style: TextStyle(fontSize: 14, color: Colors.white54),
+        ),
+        const Text(
+          'Distinctive smoky character.',
+          style: TextStyle(fontSize: 14, color: Colors.white54),
+        ),
+        const SizedBox(height: 16),
+
+        // Finish
+        const Text(
+          'Finish',
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.white60,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 8),
+        const Text(
+          'Long and warming.',
+          style: TextStyle(fontSize: 14, color: Colors.white54),
+        ),
+        const Text(
+          'Peppery with lingering smoke.',
+          style: TextStyle(fontSize: 14, color: Colors.white54),
+        ),
+        const Text(
+          'Slightly sweet at the very end.',
+          style: TextStyle(fontSize: 14, color: Colors.white54),
+        ),
+        const SizedBox(height: 16),
+
+        // Your Notes
+        const Text(
+          'Your notes',
+          style: TextStyle(
+              fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white54),
+        ),
+        const SizedBox(height: 8),
+      ],
+    ),
+  );
+}
+
+Widget _buildAttachmentBox() {
+  return Container(
+    width: 40,
+    height: 40,
+    decoration: BoxDecoration(
+      color: Colors.grey[300],
+      borderRadius: BorderRadius.circular(12),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.1),
+          blurRadius: 6,
+          offset: const Offset(0, 3),
+        ),
       ],
     ),
   );

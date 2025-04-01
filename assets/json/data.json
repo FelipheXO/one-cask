@@ -1,42 +1,10 @@
 [
     {
-        "name": "Springbank 1992 #1234",
-        "image": "assets/img/bottle.png"
+        "email": "tasker@gmail.com",
+        "password": "password1"
     },
     {
-        "name": "Springbank 1995 #5678",
-        "image": "assets/img/bottle.png"
-    },
-    {
-        "name": "Springbank 1998 #9101",
-        "image": "assets/img/bottle.png"
-    },
-    {
-        "name": "Springbank 2000 #1121",
-        "image": "assets/img/bottle.png"
-    },
-    {
-        "name": "Springbank 2003 #3141",
-        "image": "assets/img/bottle.png"
-    },
-    {
-        "name": "Springbank 2006 #5161",
-        "image": "assets/img/bottle.png"
-    },
-    {
-        "name": "Springbank 2009 #7181",
-        "image": "assets/img/bottle.png"
-    },
-    {
-        "name": "Springbank 2012 #9202",
-        "image": "assets/img/bottle.png"
-    },
-    {
-        "name": "Springbank 2015 #1223",
-        "image": "assets/img/bottle.png"
-    },
-    {
-        "name": "Springbank 2018 #3242",
-        "image": "assets/img/bottle.png"
+        "name": "test@test.com",
+        "image": "123456"
     }
 ]

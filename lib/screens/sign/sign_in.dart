@@ -1,8 +1,16 @@
+import 'dart:convert';
+
 import 'package:app/components/customButton.dart';
 import 'package:app/components/customTextField.dart';
+import 'package:app/models/acconts.dart';
 import 'package:app/utils/colors.dart';
+import 'package:app/utils/globa.dart';
+import 'package:app/utils/storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -15,6 +23,7 @@ class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool isLoading = false;
 
   @override
   void dispose() {
@@ -23,7 +32,50 @@ class _SignInScreenState extends State<SignInScreen> {
     super.dispose();
   }
 
-  bool obscure = false;
+  Future<void> sumit() async {
+    isLoading = true;
+    setState(() {});
+
+    try {
+      final shared = await SharedPreferences.getInstance();
+      http.Response response = await http
+          .get(Uri.parse(AppGlobal.login))
+          .timeout(const Duration(seconds: 5));
+      if (response.statusCode == 200) {
+        List<dynamic> jsonData = jsonDecode(response.body)['record'];
+        List<Accounts> data =
+            jsonData.map((item) => Accounts.fromJson(item)).toList();
+        for (var x in data) {
+          if (x.email == _emailController.text &&
+              x.password == _passwordController.text) {
+            shared.setString(AppStorage.login, jsonEncode(x.toJson()));
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              GoRouter.of(context).go('/bottomNavigation');
+            });
+            isLoading = false;
+            setState(() {});
+            return;
+          }
+        }
+
+        Fluttertoast.showToast(
+            msg: "incorrect email or password",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      }
+    } catch (e) {
+      //
+      print(e);
+    }
+    isLoading = false;
+    setState(() {});
+  }
+
+  bool obscure = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,9 +148,12 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
               const SizedBox(height: 24),
               CustomButton(
+                isLoading: isLoading,
                 text: 'Continue',
                 onPressed: () {
-                  GoRouter.of(context).go('/bottomNavigation');
+                  if (_formKey.currentState!.validate()) {
+                    sumit();
+                  }
                 },
               ),
               const SizedBox(height: 15),

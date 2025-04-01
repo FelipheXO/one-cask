@@ -18,31 +18,61 @@ class CollectionScreen extends StatelessWidget {
     double cardWidth = (screenWidth / 2) - 24;
     double cardHeight = (screenHeight / 3) - 20;
 
-    return Scaffold(
-      backgroundColor: const Color(0xff0B1519),
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.notifications_none,
-              color: Colors.white60,
-              size: 32,
+    return BlocProvider(
+      create: (_) => ItemBloc()..add(FetchItems()),
+      child: Scaffold(
+        backgroundColor: const Color(0xff0B1519),
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.notifications_none,
+                color: Colors.white60,
+                size: 32,
+              ),
             ),
-          ),
-        ],
-        title: Text(
-          "My collection",
-          style: GoogleFonts.ebGaramond(
-            fontSize: 28,
-            color: Colors.white,
+          ],
+          title: Column(
+            children: [
+              Text(
+                "My collection",
+                style: GoogleFonts.ebGaramond(
+                  fontSize: 28,
+                  color: Colors.white,
+                ),
+              ),
+              BlocBuilder<ItemBloc, ItemState>(
+                builder: (context, state) {
+                  bool isConnected = true;
+
+                  if (state is ConnectionStateChanged) {
+                    isConnected = state.isOnline;
+                  }
+
+                  return !isConnected
+                      ? Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 0),
+                          decoration: BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius: BorderRadius.circular(15)),
+                          child: const Text(
+                            "No internet",
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: Colors.white,
+                            ),
+                          ),
+                        )
+                      : const SizedBox();
+                },
+              )
+            ],
           ),
         ),
-      ),
-      body: BlocProvider(
-        create: (_) => ItemBloc()..add(FetchItems()),
-        child: BlocBuilder<ItemBloc, ItemState>(
+        body: BlocBuilder<ItemBloc, ItemState>(
           builder: (context, state) {
             if (state is ItemLoading) {
               return const Center(child: CircularProgressIndicator());
